@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório - Banco de Baterias e Nobreak</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      background-color: #f4f7f6; /* Lighter background for contrast */
+      color: #333;
+      line-height: 1.6;
+    }
+
+    h2 {
+      color: #00c143;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2em;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    fieldset {
+      border: 1px solid #c2e6d1; /* Lighter border for fieldset */
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 25px;
+      background-color: #ffffff; /* White background for sections */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    legend {
+      color: #00c143;
+      font-weight: bold;
+      padding: 0 10px;
+      font-size: 1.2em;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin-top: 5px;
+      padding: 10px;
+      border: 1px solid #a8dadc;
+      border-radius: 5px;
+      width: calc(100% - 22px); /* Adjust for padding and border */
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      background-color: #e6f7ef; /* Light green tint for file input */
+      color: #333;
+    }
+
+    input[type="file"]::file-selector-button {
+      background-color: #00c143;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background-color: #00a037; /* Slightly darker green on hover */
+    }
+
+    button {
+      display: block;
+      width: 250px;
+      margin: 30px auto;
+      padding: 15px 25px;
+      background-color: #00c143;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      background-color: #00a037;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Banco de Baterias e Nobreak</h2>
+
+  <div id="bancoContainer"></div>
+
+  <button onclick="gerarZip()">Gerar ZIP</button>
+
+  <script>
+    function gerarCamposBanco() {
+      const campos = [
+        "Foto do conjunto banco + nobreak",
+        "Foto da disposição das baterias",
+        "Foto das conexões dos cabos nos terminais das baterias",
+        "Foto da etiqueta de identificação de polaridade",
+        "Foto da tensão total do banco no multímetro",
+        "Foto da etiqueta de identificação do nobreak",
+        "Foto da entrada de alimentação DC",
+        "Foto da conexão das cargas (saída AC do nobreak)",
+        "Foto da tela ou painel do nobreak mostrando leitura de tensão e modo de operação",
+        "Foto da fixação dos cabos (organização e acabamento)",
+        "Foto da sinalização e etiquetas aplicadas",
+        "Foto da área finalizada, limpa e organizada"
+      ];
+
+      const container = document.getElementById("bancoContainer");
+    
+
+      campos.forEach((titulo, i) => {
+        const id = `banco${i + 1}`;
+        container.innerHTML += `
+          <label for="${id}">${titulo}:</label>
+          <input type="file" accept="image/*" id="${id}">
+        `;
+      });
+
+      container.innerHTML += '</fieldset>';
+    }
+
+    async function gerarZip() {
+      const zip = new JSZip();
+      const campos = [
+        "Conjunto_Banco_Nobreak",
+        "Disposicao_Baterias",
+        "Conexoes_Terminais_Baterias",
+        "Etiqueta_Polaridade",
+        "Tensao_Total_Multimetro",
+        "Etiqueta_Nobreak",
+        "Entrada_Alimentacao_DC",
+        "Conexao_Cargas_Saida_AC",
+        "Tela_Leitura_Nobreak",
+        "Fixacao_Cabos",
+        "Sinalizacao_Etiquetas",
+        "Area_Finalizada"
+      ];
+
+      for (let i = 0; i < campos.length; i++) {
+        const input = document.getElementById(`banco${i + 1}`);
+        if (input && input.files.length > 0) {
+          const file = input.files[0];
+          const blob = await file.arrayBuffer();
+          const ext = file.name.split('.').pop();
+          zip.file(`BANCO_NOBREAK/${i + 1}_${campos[i]}.${ext}`, blob);
+        }
+      }
+
+      const blobZip = await zip.generateAsync({ type: "blob" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blobZip);
+      link.download = "relatorio_banco_nobreak.zip";
+      link.click();
+    }
+
+    // Gera os campos automaticamente
+    gerarCamposBanco();
+  </script>
+
+</body>
+</html>
