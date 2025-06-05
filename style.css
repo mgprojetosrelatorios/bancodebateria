@@ -1,0 +1,90 @@
+body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      background-color: #f4f7f6; /* Lighter background for contrast */
+      color: #333;
+      line-height: 1.6;
+    }
+
+    h2 {
+      color: #00c143;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2em;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    fieldset {
+      border: 1px solid #c2e6d1; /* Lighter border for fieldset */
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 25px;
+      background-color: #ffffff; /* White background for sections */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    legend {
+      color: #00c143;
+      font-weight: bold;
+      padding: 0 10px;
+      font-size: 1.2em;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin-top: 5px;
+      padding: 10px;
+      border: 1px solid #a8dadc;
+      border-radius: 5px;
+      width: calc(100% - 22px); /* Adjust for padding and border */
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      background-color: #e6f7ef; /* Light green tint for file input */
+      color: #333;
+    }
+
+    input[type="file"]::file-selector-button {
+      background-color: #00c143;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background-color: #00a037; /* Slightly darker green on hover */
+    }
+    button {
+      display: block;
+      width: 250px;
+      margin: 30px auto;
+      padding: 15px 25px;
+      background-color: #00c143;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      background-color: #00a037;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
